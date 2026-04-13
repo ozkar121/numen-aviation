@@ -3,11 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Empty Legs — Numen Aviation</title>
-  <meta name="description" content="Exclusive empty leg flights across Mexico, the U.S. and the Caribbean at a fraction of charter price. Updated availability from Numen Aviation.">
+  <title>Empty Legs México | Vuelos Privados hasta 75% Descuento — Numen Aviation</title>
+  <meta name="description" content="Empty legs en México, EUA y el Caribe hasta 75% más baratos que un charter completo. Disponibilidad actualizada en tiempo real. Toluca, CDMX, Monterrey, Cancún, Los Cabos.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Empty Legs — Numen Aviation">
+  <meta property="og:description" content="Exclusive empty leg flights across Mexico, the U.S. and the Caribbean at up to 75% off full charter price. Updated in real time.">
+  <meta property="og:image" content="https://numen-aviation.com/why-image.jpg">
+  <meta property="og:url" content="https://numen-aviation.com/empty-legs.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Numen Aviation">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Empty Legs — Numen Aviation">
+  <meta name="twitter:description" content="Exclusive empty leg flights at up to 75% off. Available across Mexico, the U.S. and the Caribbean.">
+  <meta name="twitter:image" content="https://numen-aviation.com/why-image.jpg">
+  <meta name="keywords" content="empty legs Mexico, vuelos privados baratos Mexico, empty leg jet privado, charter barato Mexico, reposicionamiento avion Mexico, empty leg CDMX, empty leg Cancun, empty leg Monterrey, empty leg Los Cabos">
+  <meta name="author" content="Numen Aviation">
+  <meta name="geo.region" content="MX">
+  <meta name="geo.placename" content="Toluca, Mexico">
+  <!-- Performance hints -->
+  <meta name="theme-color" content="#080907">
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+  <!-- Non-blocking font load -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap"></noscript>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -32,6 +55,7 @@
       font-family: var(--sans);
       font-weight: 300;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
 
     body::before {
@@ -722,6 +746,27 @@
       .fc-mid { grid-template-columns: 1fr 1fr; }
     }
   </style>
+  <!-- Schema.org Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Empty Legs — Numen Aviation",
+    "description": "Vuelos privados de reposicionamiento hasta 75% más baratos que un charter completo en México, EUA y el Caribe.",
+    "url": "https://numen-aviation.com/empty-legs.html",
+    "brand": {
+      "@type": "Brand",
+      "name": "Numen Aviation"
+    },
+    "offers": {
+      "@type": "AggregateOffer",
+      "priceCurrency": "USD",
+      "lowPrice": "2000",
+      "highPrice": "20000",
+      "offerCount": "6"
+    }
+  }
+  </script>
 </head>
 <body>
 
@@ -1212,6 +1257,20 @@
 
   // Render flights from API on page load
   renderFlights('all');
+
+  // Alert form WA redirect
+  document.getElementById('alertForm').addEventListener('submit', function(e) {
+    setTimeout(() => {
+      const name = document.getElementById('alert-name').value || '';
+      const wa   = document.getElementById('alert-wa').value || '';
+      const from = document.getElementById('alert-from').value || '';
+      const to   = document.getElementById('alert-to').value || '';
+      const msg = currentLang === 'es'
+        ? `Hola, me registré para alertas de empty legs.\n\nNombre: ${name}\nWhatsApp: ${wa}\nRuta: ${from} → ${to}`
+        : `Hello, I signed up for empty leg alerts.\n\nName: ${name}\nWhatsApp: ${wa}\nRoute: ${from} → ${to}`;
+      window.open('https://wa.me/524442348942?text=' + encodeURIComponent(msg), '_blank');
+    }, 600);
+  });
 </script>
 </body>
 </html>

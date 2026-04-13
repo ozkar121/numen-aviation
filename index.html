@@ -3,11 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Numen Aviation — Private Charter</title>
-  <meta name="description" content="Numen Aviation offers private jet charter, consulting, and aircraft acquisition services across Mexico and the Americas. Available 24/7.">
+  <title>Numen Aviation | Charter de Jet Privado en México y Las Américas</title>
+  <meta name="description" content="Numen Aviation — Charter de jet privado en México, EUA y el Caribe. Vuelos bajo demanda, empty legs, consultoría y adquisición de aeronaves. Disponible 24/7 desde Toluca.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Numen Aviation — Private Charter">
+  <meta property="og:description" content="On-demand private jet charter, consulting, and aircraft acquisition across Mexico and the Americas. Available 24/7.">
+  <meta property="og:image" content="https://numen-aviation.com/why-image.jpg">
+  <meta property="og:url" content="https://numen-aviation.com">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Numen Aviation">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Numen Aviation — Private Charter">
+  <meta name="twitter:description" content="On-demand private jet charter, consulting, and aircraft acquisition across Mexico and the Americas.">
+  <meta name="twitter:image" content="https://numen-aviation.com/why-image.jpg">
+  <meta name="keywords" content="charter jet privado Mexico, vuelo privado Mexico, empty legs Mexico, charter aereo Mexico, jet privado CDMX, aviacion privada Mexico, charter Toluca, vuelos privados Mexico EUA Caribe, renta de jet privado">
+  <meta name="author" content="Numen Aviation">
+  <meta name="geo.region" content="MX">
+  <meta name="geo.placename" content="Toluca, Mexico">
+  <!-- Performance hints -->
+  <meta name="theme-color" content="#080907">
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+  <!-- Non-blocking font load -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap"></noscript>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -33,6 +56,7 @@
       font-family: var(--sans);
       font-weight: 300;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
 
     /* ─── GRAIN OVERLAY ─── */
@@ -936,6 +960,38 @@
       .footer-top { flex-direction: column; }
     }
   </style>
+  <!-- Schema.org Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TravelAgency",
+    "name": "Numen Aviation",
+    "description": "Charter de jet privado en México, EUA y el Caribe. Vuelos bajo demanda, empty legs, consultoría y adquisición de aeronaves.",
+    "url": "https://numen-aviation.com",
+    "logo": "https://numen-aviation.com/why-image.jpg",
+    "image": "https://numen-aviation.com/why-image.jpg",
+    "telephone": "+524442348942",
+    "email": "operaciones@numen-aviation.com",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Toluca",
+      "addressRegion": "Estado de México",
+      "addressCountry": "MX"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "19.3371",
+      "longitude": "-99.5661"
+    },
+    "openingHours": "Mo-Su 00:00-24:00",
+    "priceRange": "$$$",
+    "sameAs": [
+      "https://wa.me/524442348942"
+    ],
+    "areaServed": ["Mexico", "United States", "Caribbean", "Central America"],
+    "serviceType": ["Private Jet Charter", "Empty Legs", "Aviation Consulting", "Aircraft Acquisition"]
+  }
+  </script>
 </head>
 <body>
 
@@ -1199,6 +1255,10 @@
       </div>
       <button type="submit" class="form-submit" data-i18n="btn-submit">Send Request →</button>
     </form>
+    <p style="font-size:0.72rem;color:var(--muted);margin-top:0.75rem;line-height:1.6;">
+      ¿Necesitas respuesta inmediata? 
+      <a href="https://wa.me/524442348942?text=Hola%2C%20quisiera%20cotizar%20un%20vuelo%20privado." target="_blank" style="color:var(--gold);text-decoration:none;">Escríbenos por WhatsApp →</a>
+    </p>
   </div>
 </section>
 
@@ -1551,12 +1611,18 @@
   loadFleet();
 
   // Form submit
-  function submitForm() {
-    const msg = currentLang === 'es'
-      ? 'Gracias. Te contactaremos en breve.\n\nPara atención inmediata, escríbenos por WhatsApp.'
-      : 'Thank you! We will contact you shortly.\n\nFor immediate assistance, reach us via WhatsApp.';
-    alert(msg);
-  }
+  document.getElementById('contactForm').addEventListener('submit', function(e) {
+    setTimeout(() => {
+      const name  = document.getElementById('ph-name').value || '';
+      const from  = document.getElementById('ph-from').value || '';
+      const to    = document.getElementById('ph-to').value || '';
+      const notes = document.getElementById('ph-notes').value || '';
+      const msg = currentLang === 'es'
+        ? `Hola, acabo de enviar una solicitud desde el sitio web.\n\nNombre: ${name}\nRuta: ${from} → ${to}\nNotas: ${notes}`
+        : `Hello, I just submitted a charter request from the website.\n\nName: ${name}\nRoute: ${from} → ${to}\nNotes: ${notes}`;
+      window.open('https://wa.me/524442348942?text=' + encodeURIComponent(msg), '_blank');
+    }, 600);
+  });
   // ─── CAROUSEL ───
   function carGo(id, dir) {
     const wrap = document.getElementById(id);
