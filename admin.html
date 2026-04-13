@@ -549,6 +549,10 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.86 9.5 19.79 19.79 0 01.77 1.05a2 2 0 012-.19l3 .01a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006.99 7l1.4-1.4a2 2 0 012.11-.45 12.84 12.84 0 002.82.7A2 2 0 0122 16.92z"/></svg>
         Empty Legs
       </a>
+      <a class="nav-item" onclick="showView('aircraft')" id="nav-aircraft">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.86 9.5 19.79 19.79 0 01.77 1.05a2 2 0 012-.19l3 .01a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006.99 7l1.4-1.4a2 2 0 012.11-.45 12.84 12.84 0 002.82.7A2 2 0 0122 16.92z"/></svg>
+        Aeronaves
+      </a>
       <a class="nav-item" href="empty-legs.html" target="_blank">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
         Ver Sitio Web
@@ -631,6 +635,45 @@
         </div>
       </div>
       <p class="preview-note">Los cambios se reflejan automáticamente en <a href="empty-legs.html" target="_blank">empty-legs.html</a> al abrir la página.</p>
+    </div>
+  </div>
+
+  <!-- AIRCRAFT VIEW -->
+  <div class="main" id="aircraftView" style="display:none; margin-left:var(--sidebar);">
+    <div class="topbar">
+      <div class="topbar-title">Aeronaves <em>/ Flota</em></div>
+      <div class="topbar-right">
+        <span class="badge-count" id="aircraftCount">0 aeronaves</span>
+        <button class="btn-add" onclick="openAircraftModal()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Agregar Aeronave
+        </button>
+      </div>
+    </div>
+    <div class="content">
+      <div class="table-wrap">
+        <div class="table-header">
+          <span class="table-header-left">Flota Disponible</span>
+        </div>
+        <table id="aircraftTable">
+          <thead>
+            <tr>
+              <th>Img</th>
+              <th>Nombre</th>
+              <th>Categoría</th>
+              <th>Pasajeros</th>
+              <th>Rango</th>
+              <th>Velocidad</th>
+              <th>Orden</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="aircraftTableBody"></tbody>
+        </table>
+        <div class="empty-state" id="aircraftEmptyState" style="display:none;">
+          <p>No hay aeronaves registradas. Agrega la primera.</p>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -735,6 +778,77 @@
     <div class="modal-footer">
       <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
       <button class="btn-save" onclick="saveFlight()">Guardar Vuelo →</button>
+    </div>
+  </div>
+</div>
+
+<!-- AIRCRAFT MODAL -->
+<div class="modal-overlay" id="aircraftModalOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="aircraftModalTitle">Agregar <em>aeronave</em></div>
+      <div class="modal-close" onclick="closeAircraftModal()">✕</div>
+    </div>
+    <div class="modal-body">
+      <div class="form-section">Información General</div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-lbl">Nombre <span class="req">*</span></label>
+          <input class="form-input" id="a-name" placeholder="Learjet 35">
+        </div>
+        <div class="form-group">
+          <label class="form-lbl">Categoría <span class="req">*</span></label>
+          <select class="form-select" id="a-cat">
+            <option value="">Seleccionar…</option>
+            <option value="turbo">Turbohélice</option>
+            <option value="light">Jet Ligero</option>
+            <option value="midsize">Mediano</option>
+            <option value="heavy">Pesado</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-lbl">Pasajeros <span class="req">*</span></label>
+          <input class="form-input" id="a-passengers" placeholder="6–8">
+        </div>
+        <div class="form-group">
+          <label class="form-lbl">Orden en la página</label>
+          <input class="form-input" id="a-order" placeholder="1" type="number" min="1">
+        </div>
+      </div>
+      <div class="form-section">Especificaciones</div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-lbl">Rango (km) <span class="req">*</span></label>
+          <input class="form-input" id="a-range-km" placeholder="3,523 km">
+        </div>
+        <div class="form-group">
+          <label class="form-lbl">Rango (nm)</label>
+          <input class="form-input" id="a-range-nm" placeholder="Up to 1,400 nm">
+        </div>
+        <div class="form-group">
+          <label class="form-lbl">Velocidad (km/h) <span class="req">*</span></label>
+          <input class="form-input" id="a-speed" placeholder="852 km/h">
+        </div>
+      </div>
+      <div class="form-section">Imagen</div>
+      <div class="img-upload-area" id="aircraftUploadArea" ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondrop="dropAircraftFile(event)">
+        <input type="file" id="a-img-input" accept="image/*" onchange="handleAircraftImgChange(event)">
+        <div class="img-upload-icon">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        </div>
+        <div class="img-upload-text">
+          <strong>Arrastra una imagen aquí</strong>
+          o haz clic para seleccionar
+        </div>
+      </div>
+      <div id="aircraftImgPreviewWrap" style="display:none;margin-top:0.75rem;position:relative;">
+        <img id="aircraftImgPreview" class="img-preview" src="" alt="Preview">
+        <div class="img-remove" onclick="removeAircraftImg()">✕</div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeAircraftModal()">Cancelar</button>
+      <button class="btn-save" onclick="saveAircraft()">Guardar Aeronave →</button>
     </div>
   </div>
 </div>
@@ -1121,6 +1235,213 @@ function uid() { return Date.now().toString(36) + Math.random().toString(36).sli
 function showView(v) {
   document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
   event.currentTarget.classList.add('active');
+
+  // Toggle views
+  const flightsMain = document.querySelector('.main:not(#aircraftView)');
+  const aircraftMain = document.getElementById('aircraftView');
+
+  if (v === 'aircraft') {
+    flightsMain.style.display = 'none';
+    aircraftMain.style.display = 'block';
+    renderAircraftTable();
+  } else {
+    flightsMain.style.display = 'flex';
+    aircraftMain.style.display = 'none';
+    renderTable();
+  }
+}
+
+// ── AIRCRAFT ──
+const AIRCRAFT_API = 'https://numen-aviation.com/.netlify/functions/aircraft';
+let editingAircraftId = null;
+let pendingAircraftImage = null;
+
+async function getAircraft() {
+  try {
+    const res = await fetch(AIRCRAFT_API);
+    if (!res.ok) throw new Error('API error');
+    return await res.json();
+  } catch(e) {
+    showToast('Error cargando aeronaves.', true);
+    return [];
+  }
+}
+
+async function renderAircraftTable() {
+  const aircraft = await getAircraft();
+  const tbody = document.getElementById('aircraftTableBody');
+  tbody.innerHTML = '';
+  document.getElementById('aircraftEmptyState').style.display = aircraft.length === 0 ? 'block' : 'none';
+  document.getElementById('aircraftCount').textContent = aircraft.length + ' aeronave' + (aircraft.length !== 1 ? 's' : '');
+
+  const catLabels = { turbo: 'Turbohélice', light: 'Jet Ligero', midsize: 'Mediano', heavy: 'Pesado' };
+
+  aircraft.forEach(a => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${a.image_url
+        ? `<img class="td-thumb" src="${a.image_url}" alt="${a.name}">`
+        : `<div class="td-thumb-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>`
+      }</td>
+      <td style="font-family:var(--serif);font-size:1rem;">${a.name}</td>
+      <td><span class="td-cat">${catLabels[a.category] || a.category}</span></td>
+      <td>${a.passengers || '—'}</td>
+      <td>${a.range_km || '—'}</td>
+      <td>${a.speed_kmh || '—'}</td>
+      <td>${a.sort_order || '—'}</td>
+      <td>
+        <div class="actions">
+          <button class="btn-edit" onclick="editAircraft(${a.id})">Editar</button>
+          <button class="btn-del" onclick="askDeleteAircraft(${a.id})">Eliminar</button>
+        </div>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function openAircraftModal(id = null) {
+  editingAircraftId = id;
+  pendingAircraftImage = null;
+  document.getElementById('aircraftImgPreviewWrap').style.display = 'none';
+  document.getElementById('a-img-input').value = '';
+  ['a-name','a-passengers','a-range-km','a-range-nm','a-speed','a-order'].forEach(i => document.getElementById(i).value = '');
+  document.getElementById('a-cat').value = '';
+  document.getElementById('aircraftModalTitle').innerHTML = 'Agregar <em>aeronave</em>';
+  document.getElementById('aircraftModalOverlay').classList.add('open');
+}
+
+async function editAircraft(id) {
+  const aircraft = await getAircraft();
+  const a = aircraft.find(x => x.id == id);
+  if (!a) return;
+  editingAircraftId = id;
+  pendingAircraftImage = a.image_url || null;
+  document.getElementById('aircraftModalTitle').innerHTML = 'Editar <em>aeronave</em>';
+  document.getElementById('a-name').value        = a.name || '';
+  document.getElementById('a-cat').value         = a.category || '';
+  document.getElementById('a-passengers').value  = a.passengers || '';
+  document.getElementById('a-range-km').value    = a.range_km || '';
+  document.getElementById('a-range-nm').value    = a.range_nm || '';
+  document.getElementById('a-speed').value       = a.speed_kmh || '';
+  document.getElementById('a-order').value       = a.sort_order || '';
+  if (a.image_url) {
+    document.getElementById('aircraftImgPreview').src = a.image_url;
+    document.getElementById('aircraftImgPreviewWrap').style.display = 'block';
+  }
+  document.getElementById('aircraftModalOverlay').classList.add('open');
+}
+
+function closeAircraftModal() {
+  document.getElementById('aircraftModalOverlay').classList.remove('open');
+  editingAircraftId = null;
+}
+
+async function saveAircraft() {
+  const name     = document.getElementById('a-name').value.trim();
+  const category = document.getElementById('a-cat').value;
+  const passengers = document.getElementById('a-passengers').value.trim();
+  const range_km = document.getElementById('a-range-km').value.trim();
+  const speed_kmh = document.getElementById('a-speed').value.trim();
+
+  if (!name || !category || !passengers || !range_km || !speed_kmh) {
+    return showToast('Completa los campos obligatorios (*)', true);
+  }
+
+  const aircraft = {
+    name, category, passengers,
+    range_km,
+    range_nm:   document.getElementById('a-range-nm').value.trim(),
+    speed_kmh,
+    sort_order: Number(document.getElementById('a-order').value) || 99,
+    image_url:  pendingAircraftImage || null,
+  };
+
+  try {
+    let res;
+    if (editingAircraftId) {
+      res = await fetch(`${AIRCRAFT_API}?id=${editingAircraftId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(aircraft)
+      });
+    } else {
+      res = await fetch(AIRCRAFT_API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(aircraft)
+      });
+    }
+    if (!res.ok) throw new Error('Error guardando');
+    await renderAircraftTable();
+    closeAircraftModal();
+    showToast(editingAircraftId ? 'Aeronave actualizada.' : 'Aeronave agregada.');
+  } catch(e) {
+    showToast('Error guardando aeronave.', true);
+  }
+}
+
+let deleteAircraftTarget = null;
+function askDeleteAircraft(id) {
+  deleteAircraftTarget = id;
+  deleteTarget = null;
+  document.getElementById('confirmMsg').textContent = 'Se eliminará esta aeronave. Esta acción no se puede deshacer.';
+  document.getElementById('confirmOkBtn').onclick = confirmDeleteAircraft;
+  document.getElementById('confirmOverlay').classList.add('open');
+}
+async function confirmDeleteAircraft() {
+  if (!deleteAircraftTarget) return;
+  try {
+    const res = await fetch(`${AIRCRAFT_API}?id=${deleteAircraftTarget}`, { method: 'DELETE' });
+    if (!res.ok) throw new Error('Error eliminando');
+    await renderAircraftTable();
+    closeConfirm();
+    showToast('Aeronave eliminada.');
+  } catch(e) {
+    showToast('Error eliminando aeronave.', true);
+  }
+}
+
+// Aircraft image upload
+function handleAircraftImgChange(e) {
+  const file = e.target.files[0];
+  if (file) loadAircraftImageFile(file);
+}
+async function loadAircraftImageFile(file) {
+  if (!file.type.startsWith('image/')) return showToast('Solo se permiten imágenes.', true);
+  const reader = new FileReader();
+  reader.onload = ev => {
+    document.getElementById('aircraftImgPreview').src = ev.target.result;
+    document.getElementById('aircraftImgPreviewWrap').style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+  showToast('Subiendo imagen...');
+  try {
+    const base64 = await fileToBase64(file);
+    const res = await fetch('https://numen-aviation.com/.netlify/functions/upload', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ base64, filename: file.name, mimetype: file.type })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Error subiendo imagen');
+    pendingAircraftImage = data.url;
+    showToast('Imagen subida correctamente ✓');
+  } catch(e) {
+    showToast('Error subiendo imagen: ' + e.message, true);
+    pendingAircraftImage = null;
+  }
+}
+function removeAircraftImg() {
+  pendingAircraftImage = null;
+  document.getElementById('aircraftImgPreviewWrap').style.display = 'none';
+  document.getElementById('a-img-input').value = '';
+}
+function dropAircraftFile(e) {
+  e.preventDefault();
+  document.getElementById('aircraftUploadArea').classList.remove('drag');
+  const file = e.dataTransfer.files[0];
+  if (file) loadAircraftImageFile(file);
 }
 
 // ── CLOSE MODAL ON OVERLAY CLICK ──
@@ -1132,6 +1453,9 @@ document.getElementById('confirmOverlay').addEventListener('click', e => {
 });
 document.getElementById('passModalOverlay').addEventListener('click', e => {
   if (e.target === document.getElementById('passModalOverlay')) closePassModal();
+});
+document.getElementById('aircraftModalOverlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('aircraftModalOverlay')) closeAircraftModal();
 });
 </script>
 </body>
