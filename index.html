@@ -124,6 +124,24 @@
         radial-gradient(ellipse 50% 80% at 20% 80%, rgba(8,9,7,0.85) 0%, transparent 60%),
         linear-gradient(165deg, #080907 0%, #0C0E0B 50%, #080907 100%);
     }
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.28;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .hero-video-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background:
+        linear-gradient(to right, rgba(8,9,7,0.85) 0%, rgba(8,9,7,0.4) 60%, rgba(8,9,7,0.2) 100%),
+        linear-gradient(to top, rgba(8,9,7,0.9) 0%, transparent 50%);
+    }
     /* Decorative diagonal line */
     .hero-bg::after {
       content: '';
@@ -142,6 +160,8 @@
       margin-bottom: 1.5rem;
       opacity: 0;
       animation: fadeUp 0.9s 0.3s forwards;
+      position: relative;
+      z-index: 2;
     }
     .hero-title {
       font-family: var(--serif);
@@ -153,6 +173,8 @@
       max-width: 780px;
       opacity: 0;
       animation: fadeUp 0.9s 0.5s forwards;
+      position: relative;
+      z-index: 2;
     }
     .hero-title em {
       font-style: italic;
@@ -165,6 +187,8 @@
       margin: 2rem 0;
       opacity: 0;
       animation: fadeUp 0.9s 0.7s forwards;
+      position: relative;
+      z-index: 2;
     }
     .hero-sub {
       font-size: 0.95rem;
@@ -175,6 +199,8 @@
       margin-bottom: 2.5rem;
       opacity: 0;
       animation: fadeUp 0.9s 0.85s forwards;
+      position: relative;
+      z-index: 2;
     }
     .hero-btns {
       display: flex;
@@ -182,6 +208,8 @@
       flex-wrap: wrap;
       opacity: 0;
       animation: fadeUp 0.9s 1s forwards;
+      position: relative;
+      z-index: 2;
     }
     .btn-primary {
       display: inline-flex;
@@ -936,6 +964,10 @@
 <!-- HERO -->
 <section id="hero">
   <div class="hero-bg"></div>
+  <video class="hero-video" autoplay muted loop playsinline>
+    <source src="hero-video.mp4" type="video/mp4">
+  </video>
+  <div class="hero-video-overlay"></div>
   <p class="hero-tag" data-i18n="hero-tag">Private Aviation · Mexico & The Americas</p>
   <h1 class="hero-title" data-i18n="hero-title">Beyond <em>First</em><br>Class.</h1>
   <div class="hero-rule"></div>
@@ -1035,11 +1067,7 @@
 <section id="why">
   <div class="why-visual reveal">
     <div class="why-box-main">
-      <svg class="plane-big" width="260" height="140" viewBox="0 0 260 140" fill="none">
-        <path d="M20 70 L130 50 L240 60 M130 50 L142 20 L154 50 M130 50 L126 100 L138 50" stroke="#2A8F72" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-        <circle cx="40" cy="70" r="14" stroke="#2A8F72" stroke-width="0.5" fill="none"/>
-        <circle cx="220" cy="62" r="10" stroke="#2A8F72" stroke-width="0.5" fill="none"/>
-      </svg>
+      <img src="why-image.jpg" alt="Numen Aviation" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.75) saturate(0.85);">
     </div>
     <div class="why-accent-card">
       <div class="why-accent-title">Toluca</div>
@@ -1111,7 +1139,7 @@
       </div>
       <div class="contact-item">
         <span class="contact-item-label">Email</span>
-        <span class="contact-item-val"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2946594c5b484a4046474c5a69475c444c4704485f40485d404647074a4644">[email&#160;protected]</a></span>
+        <span class="contact-item-val"><a href="mailto:operaciones@numen-aviation.com" style="color:inherit;text-decoration:none;">operaciones@numen-aviation.com</a></span>
       </div>
       <div class="contact-item">
         <span class="contact-item-label" data-i18n="why-1-title" data-en="Primary Hub" data-es="Hub Principal">Primary Hub</span>
@@ -1126,35 +1154,37 @@
         <span class="contact-item-val" data-en="Mexico · United States · Caribbean · Central America" data-es="México · Estados Unidos · Caribe · Centroamérica">Mexico · United States · Caribbean · Central America</span>
       </div>
     </div>
-    <div class="contact-form reveal">
+    <form class="contact-form reveal" name="charter-request" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="contactForm">
+      <input type="hidden" name="form-name" value="charter-request">
+      <input type="hidden" name="bot-field" style="display:none">
       <div class="form-row">
         <div class="form-group">
           <label data-i18n="lbl-name">Full Name</label>
-          <input type="text" id="ph-name" placeholder="Your name">
+          <input type="text" name="name" id="ph-name" placeholder="Your name" required>
         </div>
         <div class="form-group">
           <label data-i18n="lbl-phone">Phone / WhatsApp</label>
-          <input type="tel" placeholder="+52 1 ...">
+          <input type="tel" name="phone" placeholder="+52 1 ...">
         </div>
       </div>
       <div class="form-row">
         <div class="form-group">
           <label data-i18n="lbl-from">From</label>
-          <input type="text" id="ph-from" placeholder="Departure city / airport">
+          <input type="text" name="from" id="ph-from" placeholder="Departure city / airport">
         </div>
         <div class="form-group">
           <label data-i18n="lbl-to">To</label>
-          <input type="text" id="ph-to" placeholder="Destination city / airport">
+          <input type="text" name="to" id="ph-to" placeholder="Destination city / airport">
         </div>
       </div>
       <div class="form-row">
         <div class="form-group">
           <label data-i18n="lbl-date">Date</label>
-          <input type="date">
+          <input type="date" name="date">
         </div>
         <div class="form-group">
           <label data-i18n="lbl-pax">Passengers</label>
-          <select>
+          <select name="passengers">
             <option value="" data-en="Select" data-es="Seleccionar">Select</option>
             <option>1–2</option>
             <option>3–5</option>
@@ -1165,10 +1195,10 @@
       </div>
       <div class="form-group">
         <label data-i18n="lbl-notes">Notes</label>
-        <textarea id="ph-notes" placeholder="Aircraft preference, special requests, return date..."></textarea>
+        <textarea name="notes" id="ph-notes" placeholder="Aircraft preference, special requests, return date..."></textarea>
       </div>
-      <button class="form-submit" onclick="submitForm()" data-i18n="btn-submit">Send Request →</button>
-    </div>
+      <button type="submit" class="form-submit" data-i18n="btn-submit">Send Request →</button>
+    </form>
   </div>
 </section>
 
@@ -1200,7 +1230,7 @@
     <div class="footer-col">
       <h4 data-i18n="footer-col3">Contact</h4>
       <ul>
-        <li><a href="/cdn-cgi/l/email-protection#2b445b4e594a484244454e586b455e464e45064a5d424a5f42444505484446"><span class="__cf_email__" data-cfemail="99f6e9fcebf8faf0f6f7fcead9f7ecf4fcf7b4f8eff0f8edf0f6f7b7faf6f4">[email&#160;protected]</span></a></li>
+        <li><a href="mailto:operaciones@numen-aviation.com" style="color:inherit;text-decoration:none;">operaciones@numen-aviation.com</a></li>
         <li><a href="https://wa.me/524442348942" target="_blank">WhatsApp</a></li>
         <li><a href="#">MMTO — Toluca, Mexico</a></li>
       </ul>
@@ -1223,7 +1253,7 @@
   </svg>
 </a>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
   // ─── TRANSLATIONS ───
   const translations = {
     en: {
@@ -1458,38 +1488,52 @@
       const res = await fetch(AIRCRAFT_API);
       const data = await res.json();
       const aircraft = data.length > 0 ? data : DEFAULT_AIRCRAFT;
+      fleetLoaded = true;
 
       ['turbo','light','midsize','heavy'].forEach(cat => {
         const panel = document.getElementById('fleet-' + cat);
         const filtered = aircraft.filter(a => a.category === cat);
-        panel.innerHTML = filtered.map(buildAircraftCard).join('');
+        if (filtered.length > 0) {
+          panel.innerHTML = filtered.map(buildAircraftCard).join('');
+        }
+        // Hide tab if no aircraft in this category
+        const tab = document.querySelector(`.fleet-tab[onclick="showFleet('\${cat}')"]`);
+        if (tab) tab.style.display = filtered.length > 0 ? '' : 'none';
       });
 
-      // Show first non-empty tab
-      const tabs = ['turbo','light','midsize','heavy'];
-      tabs.forEach(cat => {
+      // Activate first visible tab
+      const firstVisible = ['turbo','light','midsize','heavy'].find(cat => {
         const panel = document.getElementById('fleet-' + cat);
-        const tab = document.querySelector(`.fleet-tab[onclick="showFleet('${cat}')"]`);
-        if (panel.innerHTML.trim() === '') {
-          if (tab) tab.style.display = 'none';
-        }
+        return panel.innerHTML.trim() !== '';
       });
+      if (firstVisible) {
+        document.querySelectorAll('.fleet-panel').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.fleet-tab').forEach(t => t.classList.remove('active'));
+        document.getElementById('fleet-' + firstVisible).classList.add('active');
+        const tab = document.querySelector(`.fleet-tab[onclick="showFleet('\${firstVisible}')"]`);
+        if (tab) tab.classList.add('active');
+      }
 
     } catch(e) {
       // Fallback to defaults on error
-      DEFAULT_AIRCRAFT.forEach(a => {
-        const panel = document.getElementById('fleet-' + a.category);
-        if (panel) panel.innerHTML += buildAircraftCard(a);
+      ['turbo','light','midsize','heavy'].forEach(cat => {
+        const panel = document.getElementById('fleet-' + cat);
+        const filtered = DEFAULT_AIRCRAFT.filter(a => a.category === cat);
+        if (filtered.length > 0) panel.innerHTML = filtered.map(buildAircraftCard).join('');
       });
     }
   }
 
   // Fleet tabs
+  let fleetLoaded = false;
   function showFleet(cat) {
     document.querySelectorAll('.fleet-panel').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.fleet-tab').forEach(t => t.classList.remove('active'));
     document.getElementById('fleet-' + cat).classList.add('active');
     event.target.classList.add('active');
+    // Reload if panel is empty
+    const panel = document.getElementById('fleet-' + cat);
+    if (!panel.innerHTML.trim()) loadFleet();
   }
 
   // Scroll reveal
