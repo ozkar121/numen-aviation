@@ -901,29 +901,22 @@
 
 <script>
 // ── STORAGE KEY & DEFAULT PASSWORD ──
+const PASS_KEY      = 'numen_admin_pass';
+const DEFAULT_PASS  = 'numen2025';
 const WA_NUMBER     = '524442348942';
 const API_URL       = 'https://numen-aviation.com/.netlify/functions/flights';
-const SETTINGS_API  = 'https://numen-aviation.com/.netlify/functions/settings';
 
 // ── AUTH ──
-async function doLogin() {
+function getPass() { return localStorage.getItem(PASS_KEY) || DEFAULT_PASS; }
+
+function doLogin() {
   const val = document.getElementById('loginPass').value;
-  if (!val) return;
-
-  try {
-    const res = await fetch(`${SETTINGS_API}?password=${encodeURIComponent(val)}`);
-    const data = await res.json();
-
-    if (data.valid) {
-      document.getElementById('loginScreen').style.display = 'none';
-      document.getElementById('app').style.display = 'block';
-      renderTable();
-      updateStats();
-    } else {
-      document.getElementById('loginErr').style.display = 'block';
-      document.getElementById('loginPass').value = '';
-    }
-  } catch(e) {
+  if (val === getPass()) {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    renderTable();
+    updateStats();
+  } else {
     document.getElementById('loginErr').style.display = 'block';
     document.getElementById('loginPass').value = '';
   }
@@ -943,27 +936,16 @@ function closePassModal() {
   document.getElementById('passModalOverlay').classList.remove('open');
   ['passOld','passNew','passNew2'].forEach(id => document.getElementById(id).value = '');
 }
-async function savePassword() {
-  const oldPass = document.getElementById('passOld').value;
-  const n1      = document.getElementById('passNew').value;
-  const n2      = document.getElementById('passNew2').value;
-
+function savePassword() {
+  const old = document.getElementById('passOld').value;
+  const n1  = document.getElementById('passNew').value;
+  const n2  = document.getElementById('passNew2').value;
+  if (old !== getPass()) return showToast('Contraseña actual incorrecta.', true);
   if (!n1 || n1.length < 6) return showToast('Mínimo 6 caracteres.', true);
   if (n1 !== n2) return showToast('Las contraseñas no coinciden.', true);
-
-  try {
-    const res = await fetch(SETTINGS_API, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ currentPassword: oldPass, newPassword: n1 })
-    });
-    const data = await res.json();
-    if (!res.ok) return showToast(data.error || 'Error actualizando.', true);
-    closePassModal();
-    showToast('Contraseña actualizada. ✓');
-  } catch(e) {
-    showToast('Error de conexión.', true);
-  }
+  localStorage.setItem(PASS_KEY, n1);
+  closePassModal();
+  showToast('Contraseña actualizada.');
 }
 
 // ── DATA ──

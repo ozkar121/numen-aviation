@@ -1,5 +1,23 @@
+# Numen Aviation — robots.txt
+# https://numen-aviation.com
+
 User-agent: *
 Allow: /
 Disallow: /admin.html
+Disallow: /admin
+Disallow: /.netlify/
+Disallow: /netlify/
+Disallow: /api/
 
+# Allow all images & static assets
+Allow: /*.jpg$
+Allow: /*.png$
+Allow: /*.webp$
+Allow: /*.svg$
+Allow: /*.mp4$
+
+# Crawl-delay (opcional, suave)
+Crawl-delay: 1
+
+# Sitemap
 Sitemap: https://numen-aviation.com/sitemap.xml
